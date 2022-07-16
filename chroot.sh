@@ -1,3 +1,4 @@
+#!/bin/bash
 ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime 
 hwclock --systohc 
 sed -i "en_US.UTF-8 UTF-8" /etc/locale.gen 
