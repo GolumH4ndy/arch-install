@@ -43,42 +43,7 @@ reflector -a 48 -c $iso -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
 mkdir /mnt &>/dev/null # Hiding error message if any
 pacman -S --noconfirm --needed gptfdisk btrfs-progs glibc 
 pacstrap /mnt base linux linux-firmware 
-genfstab -U /mnt >> /mnt/etc/fstab
-arch-chroot /mnt 
-ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime 
-hwclock --systohc 
-sed -i "en_US.UTF-8 UTF-8" /etc/locale.gen 
-sed -i "de_DE.UTF-8 UTF-8" /etc/locale.gen    
-locale-gen 
-touch /etc/locale.conf 
-sed -i "LANG=de_DE.UTF-8" 
-rm /etc/vconsole.conf 
-touch /etc/vconsole.conf 
-sed -i "KEYMAP=de-latin1" /etc/vconsole.conf 
-touch /etc/hostname 
-sed -i "julius-arch" /etc/hostname 
-mkinitcpio -P 
-passwd 
-pacman -S grub  
-pacman -S efibootmgr 
-grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=Arch Linux 
-pacman -S chromium  nautilus 
-pacman -S --needed xorg sddm
-pacman -S --needed plasma kde-applications 
-systemctl enable sddm
-systemctl enable NetworkManager 
-sudo pacman -S --needed base-devel 
-git clone https://aur.archlinux.org/yay.git 
-cd yay 
-makepkg -si 
-pacman -S mesa vulkan-intel 
-pacman -S systemd 
-touch /etc/X11/xorg.conf.d/20-intel.conf 
-sed -i "Section "Device"
-  Identifier "Intel Graphics"
-  Driver "intel"
-EndSection" /etc/X11/xorg.conf.d/20-intel.conf 
-reboot now
-
-
+genfstab -U /mnt >> /mnt/etc/fstab 
+mv /arch-install/chroot.sh /mnt 
+arch-chroot /mnt bash /chroot.sh 
 
