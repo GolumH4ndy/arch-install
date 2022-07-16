@@ -44,6 +44,6 @@ mkdir /mnt &>/dev/null # Hiding error message if any
 pacman -S --noconfirm --needed gptfdisk btrfs-progs glibc 
 pacstrap /mnt base linux linux-firmware 
 genfstab -U /mnt >> /mnt/etc/fstab 
-mv /arch-install/chroot.sh /mnt 
-arch-chroot /mnt bash /chroot.sh 
-
+mv arch-install/chroot.sh /mnt  
+chmod +x /mnt/chroot.sh
+arch-chroot /mnt 
